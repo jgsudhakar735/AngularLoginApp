@@ -20,18 +20,22 @@ angularApp.config(function($routeProvider,$mdThemingProvider){
     $mdThemingProvider.theme('blue');
 });
 
-angularApp.controller('loginCtrl',function($scope,$location,$rootScope){
+angularApp.controller('loginCtrl',function($scope,$location,$rootScope,$http){
     $scope.submit = function(){
         var username = $scope.username;
         var pwd = $scope.userpwd;
-        if(username == 'admin' && pwd == 'admin'){
-            $rootScope.isLoggedIn = true;
-            $location.path('login');
-        }else{
-            $scope.username = '';
-            $scope.userpwd = '';
-            alert('Invalid Credentials');
-        }
+        var isSuccess = false;
+        $http.get("./json/users.json").success(function(usersList){            
+            for(var i=0;i < usersList.Users.length;i++){
+            var userName = usersList.Users[i].username;
+            var password = usersList.Users[i].password;
+                if(userName == username && password == pwd){
+                    $rootScope.isLoggedIn = true;
+                    $location.path('login');
+                }
+            }
+            })          
+        
     };
 });
 
