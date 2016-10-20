@@ -1,0 +1,25 @@
+      <md-toolbar>
+         <div class="md-toolbar-tools">
+            <h2 class="md-flex">Login Here ! </h2>
+         </div>
+      </md-toolbar>
+<section ng-controller ="loginCtrl">
+   <div layout="row" layout-align="center center">
+   </div>
+    <div layout="row" layout-align="center center">       
+        <form name="lf" novalidate>
+            <md-input-container class="md-block">
+                <label>User name</label>
+                <input  required name="username" ng-model="username">
+                
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Password</label>
+                <input type="password" ng-click ="open($event)"required name="password" ng-model="userpwd">                
+            </md-input-container>
+            
+             <md-button class="md-raised md-primary" ng-click ="submit()" ng-disabled ="lf.$invalid">Submit</md-button>
+             
+        </form>
+    </div>
+</section>
