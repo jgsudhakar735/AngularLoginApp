@@ -1,26 +1,50 @@
-var angularApp = angular.module('AppCtrl',['ngRoute','ngMaterial']);
+var angularApp = angular.module('AppCtrl',['ngMaterial','ui.router']);
 
-angularApp.config(function($routeProvider,$mdThemingProvider){
-    $routeProvider.when('/',{
-        templateUrl:'views/login.html'
-    })
-    .when('/login',{
-        resolve:{
+angularApp.config(function($mdThemingProvider,$stateProvider,$urlRouterProvider){
+    
+    $urlRouterProvider.otherwise("/login");
+    
+    $stateProvider
+    .state('login', {
+            url: '/',
+            views: {
+                nav: {
+                   templateUrl : 'views/header.html'
+                },
+                content: {
+                      templateUrl: 'views/login.html' 
+                },
+                footer :{
+                     templateUrl : 'views/footer.html'                       
+                }                           
+            }
+        })
+        .state('dashboard',{
+        url : 'dashboard',
+         resolve:{
           "check":function($location,$rootScope){
               if(!$rootScope.isLoggedIn){
                  $location.path('/'); 
               }                              
           }  
         },
-        templateUrl:"views/dashboard.html"        
-    })
-    .otherwise({
-        redirectTo:"/"
-    });
-    $mdThemingProvider.theme('blue');
+          views: {
+                nav: {
+                   templateUrl : 'views/header.html'
+                },
+                content: {
+                      templateUrl: 'views/dashboard.html' 
+                },
+                footer :{
+                     templateUrl : 'views/footer.html'                       
+                }                           
+            }
+    });                                                                                        
+    $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('orange');
+//    $mdThemingProvider.theme('purple');
 });
 
-angularApp.controller('loginCtrl',function($scope,$location,$rootScope,$http){
+angularApp.controller('loginCtrl',function($scope,$state,$rootScope,$http){
     $scope.submit = function(){
         var username = $scope.username;
         var pwd = $scope.userpwd;
@@ -31,7 +55,7 @@ angularApp.controller('loginCtrl',function($scope,$location,$rootScope,$http){
             var password = usersList.Users[i].password;
                 if(userName == username && password == pwd){
                     $rootScope.isLoggedIn = true;
-                    $location.path('login');
+                    $state.go('dashboard');
                 }
             }
             })          
