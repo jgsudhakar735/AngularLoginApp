@@ -6,7 +6,7 @@ angularApp.config(function($mdThemingProvider,$stateProvider,$urlRouterProvider)
     
     $stateProvider
     .state('login', {
-            url: '/',
+            url: '/login',
             views: {
                 nav: {
                    templateUrl : 'views/header.html'
@@ -20,11 +20,11 @@ angularApp.config(function($mdThemingProvider,$stateProvider,$urlRouterProvider)
             }
         })
         .state('dashboard',{
-        url : 'dashboard',
+        url : '/dashboard',
          resolve:{
           "check":function($location,$rootScope){
               if(!$rootScope.isLoggedIn){
-                 $location.path('/'); 
+                  $state.go('login') 
               }                              
           }  
         },

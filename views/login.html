@@ -1,13 +1,11 @@
-      <md-toolbar layout-align="center">
-         <div class="md-toolbar-tools">
-            <h2 class="md-flex">Login Here ! </h2>
-         </div>
-      </md-toolbar>
 <section ng-controller ="loginCtrl">
    <div layout="row" layout-align="center center">
    </div>
     <div layout="row" layout-align="center center">       
         <form name="lf" novalidate>
+                     <div class="md-toolbar-tools">
+                        <h2 class="md-flex">Login Here ! </h2>
+                     </div>
             <md-input-container class="md-block">
                 <label>User name</label>
                 <input  required name="username" ng-model="username">
